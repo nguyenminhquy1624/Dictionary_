@@ -4,10 +4,6 @@
  */
 package Dictionary.connection;
 
-//import com.sun.jdi.connect.spi.Connection;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,19 +13,34 @@ import java.sql.SQLException;
  * @author MINH QUY
  */
 public class JDBCConnection {
-    public static Connection getJDBCConnection {
-        final String url = "jdbc:mysql://localhost:3306/Dictionary";
+    public static Connection getJDBCConnection() {
+        final String url = "jdbc:mysql://localhost:3306/dictionary";
         final String user = "root";
-        final String password = "";
+        final String password = "160224032002";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            DriverManager.getConnection(url, user, password);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+    
+    
+    public static void main(String[] args) {
+        
+        Connection connection = getJDBCConnection();
+        
+        if(connection != null)
+        {
+            System.out.println("Connect Succesfull");
+        }
+        else {
+            System.out.println("Connected Failed");
+        }
+        
     }
     
 }
