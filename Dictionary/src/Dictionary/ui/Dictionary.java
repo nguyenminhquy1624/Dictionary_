@@ -33,34 +33,30 @@ public class Dictionary extends javax.swing.JFrame {
      * Creates new form Dictionary
      */
     
-    DefaultListModel defaultListModel = new DefaultListModel();
-    //VoiceManager vm;
-    //Voice v;
-    
-    private ArrayList getInputs() {
-        ArrayList inputs = new ArrayList();
-        inputs.add("intelligent");
-        inputs.add("shine");
-        inputs.add("love");
-        inputs.add("address");
-        inputs.add("piss");
-        inputs.add("important");
-        inputs.add("colection");
-        inputs.add("caculus");
-        inputs.add("avalible");
-        inputs.add("pizza");
-        inputs.add("pixels");
-        inputs.add("spring");
-        inputs.add("component");
-        inputs.add("cost");
-        inputs.add("manager");
-        inputs.add("junior");
-        inputs.add("senior");
-        inputs.add("lead");
-        inputs.add("president");
-        inputs.add("hello");
+    private DefaultListModel defaultListModel = new DefaultListModel();
+
+    private ArrayList<Data> inputs = new ArrayList<Data>();
+    /*
+    public ArrayList setInputs() {
+        ArrayList<Data> inputs = new ArrayList<Data>();
+        Data obj = new Data("Nguyen Minh Quy", "Minh Quy");
+        inputs.add(obj);
+        
         return inputs;
     }
+    //inputs = setInputs();*/
+    private ArrayList getInputs() {
+
+        ArrayList <String> input = new ArrayList<>();
+        
+        
+        for(int i =0 ; i < inputs.size(); i++)
+        {
+            input.add(inputs.get(i).getWord());
+        }
+        return input;
+    }
+    
     
     public Dictionary() {
         initComponents();
@@ -71,6 +67,8 @@ public class Dictionary extends javax.swing.JFrame {
                 
             } 
         });
+        
+        
         
     }
 
@@ -258,9 +256,53 @@ public class Dictionary extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    // Sửa từ 
+    
+    private void editWord(String Word_Old,String Word_New, String Define_New) {
+        int index = 0;
+        for (int i = 0; i < inputs.size(); i++) {
+            if (inputs.get(i).getWord().equals(Word_Old)) {
+                index = i;
+                break;
+            }
+        }
+        
+           inputs.get(index).setWord(Word_New);
+           inputs.get(index).setDefine(Define_New);
+           defaultListModel.setElementAt(inputs.get(index).getWord(), index);
+           FilterWord.setModel(defaultListModel);
+           
+    }
+    
+    
+    // Hàm xóa từ trong list word
+    private void deleteWord(String selectWord) {
+        int index = 0;
+        for (int i = 0; i < inputs.size(); i++) {
+            if (inputs.get(i).getWord().equals(selectWord)) {
+                index = i;
+                break;
+            }
+        }
+        if (inputs.get(index).getWord().equals(selectWord)) {
+            inputs.remove(index);
+            defaultListModel.remove(index);
+            FilterWord.setModel(defaultListModel);
+        }
+    }
+    
+    
+    
+
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         
-        String input = WordInput.getText();
+       int index = FilterWord.getSelectedIndex();
+        Data obj = inputs.get(index);
+        
+        String input = obj.getDefine();
+                
+                
          Output.setText(input);
     }//GEN-LAST:event_SearchActionPerformed
 
@@ -329,7 +371,13 @@ public class Dictionary extends javax.swing.JFrame {
         }
         // chỗ này để xử lý thêm từ khi có tin vào
         
+        FilterWord.setModel(defaultListModel);
         
+        Data obj;
+        obj = new Data(s_addWord,s_addDefine);
+        inputs.add(obj);
+        
+        defaultListModel.addElement(obj.getWord());
         
         
         // thông báo đã thêm thành công
@@ -355,7 +403,7 @@ public class Dictionary extends javax.swing.JFrame {
         /* hoạt động xóa từ ra khỏi danh sách*/
         
         
-        
+        deleteWord(s);
         
         // thông báo đã thêm từ thành công
         if(s != null && s.length() > 0) {
@@ -382,7 +430,7 @@ public class Dictionary extends javax.swing.JFrame {
         }
         // chỗ này để xử lý khi sửa từ khi có tin vào
         
-        
+        editWord(s_fixOddWord, s_fixNewWord, s_fixDefineNewWord);
         
         
         // thông báo đã sửa thành công

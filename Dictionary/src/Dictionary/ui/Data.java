@@ -4,20 +4,21 @@
  */
 package Dictionary.ui;
 
+import java.util.ArrayList;
+import org.xml.sax.InputSource;
+
 /**
  *
  * @author MINH QUY
  */
-public class Data {
+public class Data extends Dictionary{
     private String word, define;
 
-    /**
-     * @return the text
-     */
     
     public Data(String word, String define) {
         this.word = word;
         this.define = define;
+        
     }
     
     
@@ -25,25 +26,18 @@ public class Data {
         return word;
     }
 
-    /**
-     * @param text the text to set
-     */
     public void setWord(String word) {
         this.word = word;
     }
 
-    /**
-     * @return the dec
-     */
     public String getDefine() {
         return define;
     }
 
-    /**
-     * @param dec the dec to set
-     */
     public void setDefine(String dec) {
         this.define = define;
     }
+    
+    
     
 }
