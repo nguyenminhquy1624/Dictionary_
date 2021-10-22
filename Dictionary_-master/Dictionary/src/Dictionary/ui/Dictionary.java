@@ -5,7 +5,7 @@
 package Dictionary.ui;
 
 
-import Dictionary.connection.JDBCConnection;
+//import Dictionary.connection.JDBCConnection;
 import com.sun.jdi.connect.spi.Connection;
 import com.sun.management.VMOption;
 import java.io.*;

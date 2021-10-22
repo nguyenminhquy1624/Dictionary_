@@ -1,0 +1,10 @@
+ private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
+        // TODO add your handling code here:
+        ArrayList <Data> tmp = new ArrayList <Data> ();
+        tmp = libraries.get_all_Data();
+        int n = tmp.size();
+        for(int i = 0; i < n; i++)
+        {
+           Data obj = tmp.get(i);
+            defaultListModel.addElement(obj.getWord());           
+        }

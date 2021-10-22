@@ -1,0 +1,79 @@
+private void AddWordMouseClicked(java.awt.event.MouseEvent evt) {                                     
+        JTextField addWordTextField = new JTextField();
+        JTextField adddefinitionTextField = new JTextField();
+        String s_addWord = (String)JOptionPane.showInputDialog(this,"Bạn muốn thêm từ?" , "Thông báo" ,
+                JOptionPane.QUESTION_MESSAGE);
+        String s_addDefine = "";
+        if(s_addWord!=null && s_addWord.length() > 0)
+        {
+            s_addDefine = (String)JOptionPane.showInputDialog(this,"Mời bạn thêm nghĩa của từ" , "Thông báo" ,
+                JOptionPane.QUESTION_MESSAGE);
+        }
+        // chỗ này để xử lý thêm từ khi có tin vào
+        int tmp = libraries.add_Word(s_addWord, s_addDefine);
+       
+        
+        defaultListModel.addElement(libraries.get_Word(tmp));
+        FilterWord.setModel(defaultListModel);
+        
+        // thông báo đã thêm thành công
+        if( (s_addDefine != null) && (s_addDefine.length() > 0)) {
+            JOptionPane.showMessageDialog(this, "Đã thêm từ thành công", "Thông báo" ,JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }                                    
+
+    private void DeleteWordMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        JTextField deleteWordTextField = new JTextField();
+        String s = (String)JOptionPane.showInputDialog(this, "Do you want delete word?" , "Thông báo" ,
+               JOptionPane.QUESTION_MESSAGE);
+        
+        /* hoạt động xóa từ ra khỏi danh sách*/
+        int tmp = libraries.delete_Word(s);
+        defaultListModel.remove(tmp);
+        FilterWord.setModel(defaultListModel);
+        
+        // thông báo đã thêm từ thành công
+        if(s != null && s.length() > 0) {
+            JOptionPane.showMessageDialog(this, "Đã xóa từ thành công", "Thông báo" ,JOptionPane.INFORMATION_MESSAGE);
+        }
+    }                                       
+
+    // Sửa từ 
+    private void FixWordActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        // TODO add your handling code here:
+    }                                       
+
+    private void FixWordMouseClicked(java.awt.event.MouseEvent evt) {                                     
+        
+         String s_fixOddWord = (String)JOptionPane.showInputDialog(this,"Từ cũ bạn muốn sửa :" , "Thông báo" ,
+                JOptionPane.QUESTION_MESSAGE);
+         String s_fixNewWord = (String)JOptionPane.showInputDialog(this,"Mời bạn sửa từ mới :" , "Thông báo" ,
+                JOptionPane.QUESTION_MESSAGE);
+        String s_fixDefineNewWord = "";
+        if(s_fixNewWord!=null && s_fixNewWord.length() > 0)
+        {
+            s_fixDefineNewWord = (String)JOptionPane.showInputDialog(this, "Mời bạn định nghĩa lại từ" , "Thông báo" ,
+                JOptionPane.QUESTION_MESSAGE);
+        }
+        // chỗ này để xử lý khi sửa từ khi có tin vào
+        
+        int tmp = libraries.edit_Word(s_fixOddWord, s_fixNewWord, s_fixDefineNewWord);
+        defaultListModel.setElementAt(libraries.get_Word(tmp), tmp);
+        FilterWord.setModel(defaultListModel);
+        // thông báo đã sửa thành công
+        if( (s_fixDefineNewWord != null) && (s_fixDefineNewWord.length() > 0)) {
+            JOptionPane.showMessageDialog(this, "Đã sửa từ thành công", "Thông báo" ,JOptionPane.INFORMATION_MESSAGE);
+        }
+    }                                    
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {                                  
+        // TODO add your handling code here:
+        libraries.insert_from_db();
+        int n = 10;
+        for(int i = 0; i < n; i++)
+        {
+           Data obj = libraries.Word_list.get(i);
+            defaultListModel.addElement(libraries.Word_list.get(i).getWord());           
+        }
+    }                      
